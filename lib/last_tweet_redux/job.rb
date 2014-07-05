@@ -1,7 +1,8 @@
 module LastTweetRedux
   class Job
-    def initialize(redis_uri: '')
-      @redis_client = redis_uri ? Redis.new : Redis.new(url: redis_uri)
+    def initialize(opts)
+      @options = opts
+      @redis_client = opts.redis_url ? Redis.new : Redis.new(url: opts.redis_url)
     end
 
     def run
@@ -18,7 +19,7 @@ module LastTweetRedux
     end
 
     def connection
-      @connection ||= LastTweetRedux::Connection.new(screen_name: 'dakull')
+      @connection ||= LastTweetRedux::Connection.new({ screen_name: @options.handler }, @options.oauth_credentials)
     end
 
     def save_to_redis(html)

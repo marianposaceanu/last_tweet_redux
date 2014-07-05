@@ -6,7 +6,8 @@ module LastTweetRedux
   class Connection
     BASE_TWITTEER_API_URL = 'https://api.twitter.com/1.1'
 
-    def initialize(opts = {})
+    def initialize(opts = {}, oauth_credentials)
+      @oauth_credentials = oauth_credentials
       @options = default_options.merge(opts)
     end
 
@@ -35,7 +36,7 @@ module LastTweetRedux
     end
 
     def last_tweet_header(params, uri)
-      oauth_header = LastTweetRedux::OauthHeader.new(params: params)
+      oauth_header = LastTweetRedux::OauthHeader.new(@oauth_credentials, params)
       oauth_header.last_tweet_header(uri)
     end
 

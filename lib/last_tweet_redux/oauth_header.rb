@@ -4,8 +4,8 @@ module LastTweetRedux
   class OauthHeader
     include Utils
 
-    def initialize(file_path: 'twitter.yml', params: {})
-      @file_path = file_path
+    def initialize(oauth_credentials, params = {})
+      @oauth_credentials = oauth_credentials
       @params = params
     end
 
@@ -16,11 +16,7 @@ module LastTweetRedux
     private
 
     def oauth_auth_header(method, uri, params = {})
-      SimpleOAuth::Header.new(method, uri, params, credentials)
-    end
-
-    def credentials
-      @credentials ||= symoblize_keys(YAML.load_file(@file_path))
+      SimpleOAuth::Header.new(method, uri, params, @oauth_credentials)
     end
   end
 end
