@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'dante'
+require File.expand_path("../../lib/last_tweet_redux", __FILE__)
+
+runner = Dante::Runner.new('last_tweet_redux')
+runner.description = "Last Tweet Redux"
+
+runner.with_options do |opts|
+  opts.on('-c', '--config last_tweet_config.yml', String, 'Config path') do |test|
+    options[:config] = test
+  end
+end
+
+# Create validation hook for options
+runner.verify_options_hook = lambda do |opts|
+  raise Exception.new('Must supply config parameter') if opts[:config].nil?
+end
+
+runner.execute do |opts|
+  # opts: host, pid_path, port, daemonize, user, group
+  puts opts[:config]
+  puts opts[:pid_path]
+
+  LastTweetRedux::Process.init(opts[:config])
+end
