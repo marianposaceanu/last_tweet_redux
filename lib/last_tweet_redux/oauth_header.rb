@@ -1,22 +1,11 @@
 require 'simple_oauth'
 
 module LastTweetRedux
-  class OauthHeader
-    include Utils
+  module OauthHeader
+    extend self
 
-    def initialize(oauth_credentials, params = {})
-      @oauth_credentials = oauth_credentials
-      @params = params
-    end
-
-    def last_tweet_header(uri)
-      oauth_auth_header(:get, uri, @params)
-    end
-
-    private
-
-    def oauth_auth_header(method, uri, params = {})
-      SimpleOAuth::Header.new(method, uri, params, @oauth_credentials)
+    def create(uri, uri_query_params, oauth_credentials)
+      SimpleOAuth::Header.new(:get, uri, uri_query_params, oauth_credentials)
     end
   end
 end

@@ -14,7 +14,7 @@ module LastTweetRedux
       config = Configuration.new(config_path)
       job    = Job.new(config)
 
-      run_loop do
+      loop do
         job.run
 
         s = job.instance_eval { @redis_client.get('last_tweet') }
@@ -24,12 +24,6 @@ module LastTweetRedux
         GC.start
 
         sleep 1 * 30
-      end
-    end
-
-    def run_loop
-      loop do
-        yield
       end
     end
   end
