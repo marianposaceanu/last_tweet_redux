@@ -1,4 +1,3 @@
-require_relative 'last_tweet_redux/utils'
 require_relative 'last_tweet_redux/configuration'
 require_relative 'last_tweet_redux/oauth_header'
 require_relative 'last_tweet_redux/connection'
