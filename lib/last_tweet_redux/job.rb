@@ -15,11 +15,11 @@ module LastTweetRedux
     private
 
     def formatter
-      LastTweetRedux::Formatter
+      Formatter
     end
 
     def connection
-      @connection ||= LastTweetRedux::Connection.new({ screen_name: @options.handler }, @options.oauth_credentials)
+      @connection ||= Connection.new(@options.screen_name, @options.oauth_credentials)
     end
 
     def save_to_redis(html)
