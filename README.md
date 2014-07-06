@@ -35,7 +35,38 @@ gem 'last_tweet_redux'
 
 ## Quick start
 
-wip
+Run the process with:
+
+as a daemon: `last-tweet -d -c twitter.yml`
+
+Config file should looke like:
+
+```yml
+screen_name: 'twitter_name'
+redis_url: 'redis://:p4ssw0rd@10.0.1.1:6380/15'
+oauth:
+  consumer_key: 'your-consumer-key'
+  consumer_secret: 'your-consumer-secret-key'
+  token : 'your-oauth-token'
+  token_secret: 'your-oauth-token-secret'
+```
+
+Kill the process: `last-tweet -k -P /var/run/myapp.pid`
+
+## Detailed config
+
+```
+  -P, --pid FILE            save PID in FILE when using -d option.
+                            (default: /var/run/last_tweet_redux.pid)
+  -d, --daemon              Daemonize mode
+  -l, --log FILE            Logfile for output
+                            (default: /var/log/last_tweet_redux.log)
+  -k, --kill [PID]         Kill specified running daemons - leave blank to kill all.
+  -u, --user USER           User to run as
+  -G, --group GROUP         Group to run as
+  -c, --config FILE.yml     Config path
+  -?, --help                Display this usage information.
+```
 
 ## License (MIT)
 

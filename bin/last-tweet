@@ -7,7 +7,7 @@ runner = Dante::Runner.new('last_tweet_redux')
 runner.description = 'Last Tweet Redux'
 
 runner.with_options do |opts|
-  opts.on('-c', '--config last_tweet_config.yml', String, 'Config path') do |test|
+  opts.on('-c', '--config FILE.yml', String, 'Config path') do |test|
     options[:config] = test
   end
 end
