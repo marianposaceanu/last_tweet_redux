@@ -1,29 +1,27 @@
+require 'redis'
+
 module LastTweetRedux
   class Job
     def initialize(opts)
       @options = opts
-      @redis_client = opts.redis_url ? Redis.new : Redis.new(url: opts.redis_url)
+      @client  = opts.redis_url ? Redis.new : Redis.new(url: opts.redis_url)
     end
 
     def run
-      tweet = connection.last_tweet_json
-      hashed_data = formatter.process(tweet)
+      last_tweet = connection.retrieve_tweet
+      formatted_last_tweet = Formatter.process(last_tweet)
 
-      save_to_redis(hashed_data.to_json)
+      save(formatted_last_tweet.to_json)
     end
 
     private
-
-    def formatter
-      Formatter
-    end
 
     def connection
       @connection ||= Connection.new(@options.screen_name, @options.oauth_credentials)
     end
 
-    def save_to_redis(html)
-      @redis_client.set('last_tweet', html)
+    def save(html)
+      @client.set('last_tweet', html)
     end
   end
 end

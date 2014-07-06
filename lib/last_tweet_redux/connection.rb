@@ -12,7 +12,7 @@ module LastTweetRedux
       @oauth_credentials = oauth_credentials
     end
 
-    def last_tweet_json
+    def retrieve_tweet
       headers = authorization_header(USER_TIMELINE_API, @uri_query_params, @oauth_credentials)
       uri = URI(USER_TIMELINE_API).tap { |u| u.query = URI.encode_www_form(@uri_query_params) }
       response = run_get_request(uri, headers)

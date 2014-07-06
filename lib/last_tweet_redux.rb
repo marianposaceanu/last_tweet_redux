@@ -1,6 +1,3 @@
-require 'redis'
-require 'pry'
-
 require_relative 'last_tweet_redux/utils'
 require_relative 'last_tweet_redux/configuration'
 require_relative 'last_tweet_redux/oauth_header'
@@ -17,7 +14,7 @@ module LastTweetRedux
       loop do
         job.run
 
-        s = job.instance_eval { @redis_client.get('last_tweet') }
+        s = job.instance_eval { @client.get('last_tweet') }
 
         puts s
 

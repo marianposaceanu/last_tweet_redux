@@ -4,7 +4,7 @@ require 'dante'
 require File.expand_path("../../lib/last_tweet_redux", __FILE__)
 
 runner = Dante::Runner.new('last_tweet_redux')
-runner.description = "Last Tweet Redux"
+runner.description = 'Last Tweet Redux'
 
 runner.with_options do |opts|
   opts.on('-c', '--config last_tweet_config.yml', String, 'Config path') do |test|
