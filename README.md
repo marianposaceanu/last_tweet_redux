@@ -7,7 +7,7 @@ This gem does one simple action: fetches your last tweet
 - properly formats it (e.g.: links, handlers, hashtags etc.)
 - saves the result to Redis
 
-## Why
+#### Why
 
 This is just extracted functionality from my Rails app. I don't see the point of adding a couple of heavy gems just to retrieve my last tweet.
 
@@ -21,23 +21,19 @@ Solution:
 
 Run a trivial background process that just fetches the last tweet and saves it to a Redis backend this can also be a form of a microservice.
 
-### Requirements
+#### Requirements
 
 Last Tweet Redux requires at least Ruby >= 2.0 and the [Redis gem](https://github.com/redis/redis-rb) in your app.
 
-## Installation
+## Quick start
 
-Include the gem in your Gemfile:
+Include the gem in your Gemfile and do a bundle install:
 
 ```ruby
 gem 'last_tweet_redux'
 ```
 
-## Quick start
-
-Run the process with:
-
-as a daemon: `last-tweet -d -c twitter.yml`
+Run the process as a daemon: `last-tweet -d -c twitter.yml`
 
 Config file should looke like:
 
@@ -51,9 +47,9 @@ oauth:
   token_secret: 'your-oauth-token-secret'
 ```
 
-Kill the process: `last-tweet -k -P /var/run/myapp.pid`
+You can kill the process with: `last-tweet -k -P /var/run/myapp.pid`
 
-## Detailed config
+## Detailed config for the bin
 
 ```
   -P, --pid FILE            save PID in FILE when using -d option.
@@ -77,5 +73,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
