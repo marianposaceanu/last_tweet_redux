@@ -7,7 +7,8 @@ module LastTweetRedux
     def process(raw_tweet)
       {
         body: auto_link(raw_tweet['text'], target: '_blank', url_entities: raw_tweet['entities']['urls']),
-        created_at: raw_tweet['created_at']
+        created_at: raw_tweet['created_at'],
+        url: "https://twitter.com/dakull/status/#{raw_tweet['id']}"
       }
     end
   end

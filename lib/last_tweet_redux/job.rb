@@ -20,8 +20,8 @@ module LastTweetRedux
       @connection ||= Connection.new(@options.screen_name, @options.oauth_credentials)
     end
 
-    def save(html)
-      @client.set('last_tweet', html)
+    def save(json_data)
+      @client.set('last_tweet', json_data)
     end
   end
 end
