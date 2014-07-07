@@ -4,13 +4,13 @@ This gem does one simple action: fetches your last tweet (at a specified interva
 
 ## Quick start
 
-###### Include the gem in your Gemfile and do a bundle install
+__Include the gem in your Gemfile and do a bundle install__
 
 ```ruby
 gem 'last_tweet_redux', require: false
 ```
 
-Run the process as a daemon: `last-tweet -d -c twitter.yml`
+Run the process as a daemon: `last-tweet -d -P tmp/last_tweet.pid -l tmp/last_tweet.log -c twitter.yml`
 
 Configuration file should look like:
 
@@ -27,9 +27,9 @@ oauth:
 
 __note__: interval is an Integer for the number of minutes the process should hit the Twitter API
 
-You can kill the process with: `last-tweet -k -P /var/run/myapp.pid`
+You can kill the process with: `last-tweet -k -P tmp/last_tweet.pid`
 
-###### In your application add the Redis gem and retrieve your tweet
+__In your application add the Redis gem and retrieve your tweet__
 
 In your controller:
 
@@ -53,7 +53,8 @@ Then in your view:
     <%= last_tweet_body %>
   </div>
 ```
-###### Capistrano commands for startin/killing the daemon
+
+__Capistrano commands for starting/killing the daemon__
 
 ```ruby
 after 'unicorn:restart' do
@@ -64,11 +65,11 @@ end
 
 __note__: the example uses chruby feel free to update/remove if the case
 
-#### Requirements
+### Requirements
 
 Last Tweet Redux requires at least Ruby >= 2.0 and the [Redis gem](https://github.com/redis/redis-rb) in your app.
 
-#### Detailed configuration parameters for the executable
+### Detailed configuration parameters for the executable
 
 ```
   -P, --pid FILE            save PID in FILE when using -d option.
