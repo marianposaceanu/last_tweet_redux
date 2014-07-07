@@ -1,45 +1,23 @@
 # Last Tweet redux
 
-This gem does one simple action: fetches your last tweet
-
-- runs as a background process
-- fetches your last tweet
-- properly formats it (e.g.: links, handlers, hashtags etc.)
-- saves the result to Redis
-
-#### Why
-
-This is just extracted functionality from my Rails app. I don't see the point of adding a couple of heavy gems just to retrieve my last tweet.
-
-In my previous implementation this generated unnecessary complexity:
-
-- get the tweet from the backend then cache it - requires gems, must be cached for a long time as an API call takes some time
-- get the tweet via JS and then cache it via local storage - makes the front-end slow adds unnecessary JS logic
-- do an async call to cached backend endpoint - cache it via local storage and via backend - but as the tweet loads for the 1st time I have an empty or loading div - you get the "best" of both worlds
-
-Solution:
-
-Run a trivial background process that just fetches the last tweet and saves it to a Redis backend this can also be a form of a microservice.
-
-#### Requirements
-
-Last Tweet Redux requires at least Ruby >= 2.0 and the [Redis gem](https://github.com/redis/redis-rb) in your app.
+This gem does one simple action: fetches your last tweet (at a specified interval) and saves it (properly formatted) to Redis.
 
 ## Quick start
 
-Include the gem in your Gemfile and do a bundle install:
+1. Include the gem in your Gemfile and do a bundle install:
 
 ```ruby
 gem 'last_tweet_redux', require: false
 ```
 
-Run the process as a daemon: `last-tweet -d -c twitter.yml`
+2. Run the process as a daemon: `last-tweet -d -c twitter.yml`
 
-Config file should looke like:
+Config file should look like:
 
 ```yml
 screen_name: 'twitter_name'
 redis_url: 'redis://:p4ssw0rd@10.0.1.1:6380/15'
+interval: 1
 oauth:
   consumer_key: 'your-consumer-key'
   consumer_secret: 'your-consumer-secret-key'
@@ -47,9 +25,32 @@ oauth:
   token_secret: 'your-oauth-token-secret'
 ```
 
+__note__: interval is an Integer for the number of minutes the process should hit the Twitter API
+
 You can kill the process with: `last-tweet -k -P /var/run/myapp.pid`
 
-## Detailed config for the bin
+3. In your application add the Redis gem and retrieve your tweet:
+
+In your controller:
+
+```ruby
+  def get_last_tweet
+    client = Redis.new
+    @last_tweet_html = client.get('last_tweet').html_safe # for Rails
+  end
+```
+
+Then in your view:
+
+``erb
+  <%= last_tweet %>
+```
+
+#### Requirements
+
+Last Tweet Redux requires at least Ruby >= 2.0 and the [Redis gem](https://github.com/redis/redis-rb) in your app.
+
+## Detailed configuration parameters for the executable
 
 ```
   -P, --pid FILE            save PID in FILE when using -d option.
@@ -63,6 +64,20 @@ You can kill the process with: `last-tweet -k -P /var/run/myapp.pid`
   -c, --config FILE.yml     Config path
   -?, --help                Display this usage information.
 ```
+
+## Why
+
+This is just extracted functionality from my Rails app. I don't see the point of adding a couple of heavy gems just to retrieve my last tweet.
+
+In my previous implementation this generated unnecessary complexity:
+
+- get the tweet from the backend then cache it - requires gems, must be cached for a long time as an API call takes some time
+- get the tweet via JS and then cache it via local storage - makes the front-end slow adds unnecessary JS logic
+- do an async call to cached backend endpoint - cache it via local storage and via backend - but as the tweet loads for the 1st time I have an empty or loading div - you get the "best" of both worlds
+
+Solution:
+
+Run a trivial background process that just fetches the last tweet and saves it to a Redis backend this can also be a form of a microservice.
 
 ## License (MIT)
 
