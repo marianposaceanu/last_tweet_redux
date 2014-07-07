@@ -53,6 +53,16 @@ Then in your view:
     <%= last_tweet_body %>
   </div>
 ```
+###### Capistrano commands for startin/killing the daemon
+
+```ruby
+after 'unicorn:restart' do
+  run "cd #{current_path}; chruby-exec #{ruby_version} -- bundle exec last-tweet -k -P tmp/last_tweet.pid -c config/last_tweet.yml"
+  run "cd #{current_path}; chruby-exec #{ruby_version} -- bundle exec last-tweet -d -P tmp/last_tweet.pid -l tmp/last_tweet.log -c config/last_tweet.yml"
+end
+```
+
+__note__: the example uses chruby feel free to update/remove if the case
 
 #### Requirements
 
