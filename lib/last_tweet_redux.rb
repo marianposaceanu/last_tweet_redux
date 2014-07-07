@@ -13,7 +13,7 @@ module LastTweetRedux
       loop do
         job.run
 
-        puts job.instance_eval { @client.get('last_tweet') }
+        puts job.instance_eval { Marshal.load @client.get('last_tweet') }
 
         GC.start
 

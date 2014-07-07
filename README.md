@@ -38,10 +38,7 @@ In your controller:
   def get_last_tweet
     client = Redis.new
 
-    last_tweet      = JSON.parse(client.get('last_tweet'))
-    last_tweet_body = last_tweet.body.html_safe # for Rails
-    last_tweet_url  = last_tweet.url
-    last_tweet_data = last_tweet.created_at
+    @last_tweet = Marshal.load client.get('last_tweet')
   end
 ```
 
@@ -50,7 +47,9 @@ Then in your view:
 ```erb
 # rest of your view
   <div id="tweet">
-    <%= last_tweet_body %>
+    <%= last_tweet.body %>
+    <%= last_tweet.created_at %>
+    <%= last_tweet.url %>
   </div>
 ```
 
