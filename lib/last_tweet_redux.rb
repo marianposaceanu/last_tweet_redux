@@ -13,13 +13,11 @@ module LastTweetRedux
       loop do
         job.run
 
-        s = job.instance_eval { @client.get('last_tweet') }
-
-        puts s
+        puts job.instance_eval { @client.get('last_tweet') }
 
         GC.start
 
-        sleep 1 * 30
+        sleep config.interval
       end
     end
   end
