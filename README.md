@@ -1,18 +1,18 @@
-# Last Tweet redux
+# Last Tweet Redux
 
 This gem does one simple action: fetches your last tweet (at a specified interval) and saves it (properly formatted) to Redis.
 
 ## Quick start
 
-1. Include the gem in your Gemfile and do a bundle install:
+###### Include the gem in your Gemfile and do a bundle install
 
 ```ruby
 gem 'last_tweet_redux', require: false
 ```
 
-2. Run the process as a daemon: `last-tweet -d -c twitter.yml`
+Run the process as a daemon: `last-tweet -d -c twitter.yml`
 
-Config file should look like:
+Configuration file should look like:
 
 ```yml
 screen_name: 'twitter_name'
@@ -29,7 +29,7 @@ __note__: interval is an Integer for the number of minutes the process should hi
 
 You can kill the process with: `last-tweet -k -P /var/run/myapp.pid`
 
-3. In your application add the Redis gem and retrieve your tweet:
+###### In your application add the Redis gem and retrieve your tweet
 
 In your controller:
 
@@ -42,7 +42,7 @@ In your controller:
 
 Then in your view:
 
-``erb
+```erb
   <%= last_tweet %>
 ```
 
