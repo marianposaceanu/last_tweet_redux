@@ -34,6 +34,7 @@ You can kill the process with: `last-tweet -k -P /var/run/myapp.pid`
 In your controller:
 
 ```ruby
+# rest of your controller
   def get_last_tweet
     client = Redis.new
     @last_tweet_html = client.get('last_tweet').html_safe # for Rails
@@ -43,14 +44,17 @@ In your controller:
 Then in your view:
 
 ```erb
-  <%= last_tweet %>
+# rest of your view
+  <div id="tweet">
+    <%= last_tweet %>
+  </div>
 ```
 
 #### Requirements
 
 Last Tweet Redux requires at least Ruby >= 2.0 and the [Redis gem](https://github.com/redis/redis-rb) in your app.
 
-## Detailed configuration parameters for the executable
+#### Detailed configuration parameters for the executable
 
 ```
   -P, --pid FILE            save PID in FILE when using -d option.
@@ -71,13 +75,13 @@ This is just extracted functionality from my Rails app. I don't see the point of
 
 In my previous implementation this generated unnecessary complexity:
 
-- get the tweet from the backend then cache it - requires gems, must be cached for a long time as an API call takes some time
-- get the tweet via JS and then cache it via local storage - makes the front-end slow adds unnecessary JS logic
-- do an async call to cached backend endpoint - cache it via local storage and via backend - but as the tweet loads for the 1st time I have an empty or loading div - you get the "best" of both worlds
+- get the tweet from the back-end then cache it - requires gems, must be cached for a long time as an API call takes some time
+- get the tweet via JavaScript and then cache it via local storage - makes the front-end slow adds unnecessary JS logic
+- do an asynchronously call to cached back-end endpoint - cache it via local storage and via back-end - but as the tweet loads for the 1st time I have an empty or loading div - you get the "best" of both worlds
 
 Solution:
 
-Run a trivial background process that just fetches the last tweet and saves it to a Redis backend this can also be a form of a microservice.
+Run a trivial background process that just fetches the last tweet and saves it to a Redis back-end this can also be a form of a microservice.
 
 ## License (MIT)
 
