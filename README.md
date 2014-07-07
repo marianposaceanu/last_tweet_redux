@@ -30,7 +30,7 @@ Last Tweet Redux requires at least Ruby >= 2.0 and the [Redis gem](https://githu
 Include the gem in your Gemfile and do a bundle install:
 
 ```ruby
-gem 'last_tweet_redux'
+gem 'last_tweet_redux', require: false
 ```
 
 Run the process as a daemon: `last-tweet -d -c twitter.yml`
