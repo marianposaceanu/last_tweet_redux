@@ -57,8 +57,8 @@ __Capistrano commands for starting/killing the daemon__
 
 ```ruby
 after 'unicorn:restart' do
-  run "cd #{current_path}; chruby-exec #{ruby_version} -- bundle exec last-tweet -k -P tmp/last_tweet.pid -c config/last_tweet.yml"
-  run "cd #{current_path}; chruby-exec #{ruby_version} -- bundle exec last-tweet -d -P tmp/last_tweet.pid -l tmp/last_tweet.log -c config/last_tweet.yml"
+  run "cd #{current_path}; chruby-exec #{ruby_version} -- bundle exec last-tweet -k -P ../shared/tmp/last_tweet.pid -c config/last_tweet.yml"
+  run "cd #{current_path}; chruby-exec #{ruby_version} -- bundle exec last-tweet -d -P ../shared/tmp/last_tweet.pid -l ../shared/tmp/last_tweet.log -c config/last_tweet.yml"
 end
 ```
 
