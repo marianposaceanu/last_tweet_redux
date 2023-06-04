@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+ruby '3.2.2'
 
 gem 'redis'
 gem 'activesupport'

@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency('dante', '~> 0.2')
   s.add_dependency('simple_oauth', '~> 0.2')
   s.add_dependency('twitter-text', '~> 1.9')
-  s.add_dependency('activesupport', '~> 4')
+  s.add_dependency('activesupport', '~> 6')
 
   # s.add_development_dependency('rspec')
   # s.add_development_dependency('webmock', '~> 1.17')
